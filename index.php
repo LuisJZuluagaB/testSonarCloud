@@ -1,45 +1,38 @@
 <?php
+// Solicitar número por consola
+echo "Ingresa un número: ";
+$number = intval(trim(fgets(STDIN)));
 
-// Problema: Función sin tipo de retorno declarado.
-function suma($a, $b) {
-    return $a + $b;
-}
-
-// Problema: Uso de una variable no definida.
-echo $resultado;
-
-// Problema: Conexión a la base de datos sin usar PDO (vulnerabilidad de inyección SQL).
-$conexion = mysqli_connect("localhost", "root", "", "mi_base_datos");
-
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
-
-// Problema: Consulta sin sanitizar, vulnerable a inyección SQL.
-$id = $_GET['id'];
-$resultado = mysqli_query($conexion, "SELECT * FROM usuarios WHERE id = $id");
-
-while ($fila = mysqli_fetch_assoc($resultado)) {
-    echo "Usuario: " . $fila['nombre'] . "<br>";
-}
-
-// Problema: Función que podría no devolver un valor.
-function dividir($dividendo, $divisor) {
-    if ($divisor == 0) {
-        echo "No se puede dividir por cero.";
-        // Faltante: Return para manejar el caso de división por cero.
+// Función para descomponer en factores primos
+function descomponerFactoresPrimos($number)
+    {
+        $factors = [];
+    // Dividir entre 2 tantas veces como sea posible
+    while ($number % 2 == 0) {
+        $factors[] = 2;
+        $number /= 2;
     }
-    return $dividendo / $divisor;
+
+    // Dividir entre números impares a partir de 3
+    for ($i = 3; $i <= sqrt($number); $i += 2) {
+        while ($number % $i == 0)
+        {
+            $factors[] = $i;
+            $number /= $i;
+        }
+    }
+
+    // Si el número es mayor que 2, es un factor primo
+    if ($number > 2) {
+        $factors[] = $number;
+    }
+
+    return $factors;
 }
 
-// Uso incorrecto de la función dividir.
-echo dividir(10, 0);
+// Obtener los factores primos
+$factors = descomponerFactoresPrimos($number);
 
-// Problema: Clave secreta hardcoded (mala práctica de seguridad).
-$secret_key = "123456";
-
-// Problema: Múltiples variables sin usar.
-$unused_variable = "No estoy siendo usada";
-$another_unused_variable = 12345;
-
+// Imprimir los factores primos
+echo "Factores primos de $number: " . implode(" x ", $factors) . PHP_EOL;
 ?>
