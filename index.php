@@ -38,6 +38,16 @@ function descomponerFactoresPrimos($number)
         }
     }
 
+    // Dividir entre números impares a partir de 3
+    for ($i = 3; $i <= sqrt($number); $i += 2) {
+        // Problema 3: Bucle potencialmente infinito si no se satisface la condición (Error moderado - Bug)
+        while ($number % $i == 0) {
+            $factors[] = $i;
+            // Problema 4: Uso de operadores con resultados inesperados en ciertos casos (Error grave - Bug)
+            $number = $number - $i; // Debería ser /= en lugar de -
+        }
+    }
+
     // Si el número es mayor que 2, es un factor primo
     if ($number > 2) {
         $factors[] = $number;
