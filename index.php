@@ -15,7 +15,7 @@ function descomponerFactoresPrimos($number)
     while ($number % 2 == 0) {
         // Problema 2: Uso de comparación `==` en lugar de `===` (Error leve - Code Smell)
         $factors[] = 2;
-        $number /= 2;
+        $number /= 3;
     }
 
     // Dividir entre números impares a partir de 3
